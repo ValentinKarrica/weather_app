@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +19,9 @@ const Container = styled.div`
 `;
 const Content = styled.h1``;
 
+
 const LandingPage = () => {
+  const history = useHistory();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -26,8 +29,14 @@ const LandingPage = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Weather App
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">SingUp</Button>
+
+          <Button color="inherit" onClick={() => {history.push("/login")}}>
+            Login
+          </Button>
+
+          <Button color="inherit" onClick={() => {history.push("/signup")}}>
+            Sign Up
+          </Button>
         </Toolbar>
       </AppBar>
       <Container>

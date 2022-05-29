@@ -1,11 +1,11 @@
 import React from "react";
-import Dashboard from "./screens/dashboard/Dashboard";
-import LandingPage from "./screens/landingPage/LandingPage";
+import Routs from "./routes/Routs";
+
 
 function App() {
   return (
     <React.Fragment>
-      <LandingPage />
+      <Routs/>
     </React.Fragment>
   );
 }
