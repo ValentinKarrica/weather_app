@@ -8,17 +8,19 @@ import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 700px;
-  background-image: url("/blueSky.png");
+  background: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.5)), url("/blueSky.png");
   background-repeat: no-repeat;
   background-size: cover;
 `;
-const Content = styled.h1``;
-
+const Content = styled.h1`
+  position: relative;
+`;
 
 const LandingPage = () => {
   const history = useHistory();
@@ -30,11 +32,21 @@ const LandingPage = () => {
             Weather App
           </Typography>
 
-          <Button color="inherit" onClick={() => {history.push("/login")}}>
+          <Button
+            color="inherit"
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
             Login
           </Button>
 
-          <Button color="inherit" onClick={() => {history.push("/signup")}}>
+          <Button
+            color="inherit"
+            onClick={() => {
+              history.push("/signup");
+            }}
+          >
             Sign Up
           </Button>
         </Toolbar>
