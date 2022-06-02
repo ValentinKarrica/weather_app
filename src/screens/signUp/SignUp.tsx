@@ -12,52 +12,24 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from 'axios'
-import { AnyArray } from "immer/dist/internal";
+
+import { updateUserFormCreate, signUpRequest } from "./store/SignUpSlice";
+import { useDispatch } from "react-redux";
+
+import { useHistory } from "react-router-dom";
 
 const theme = createTheme();
 
-export const callData1Handler = () => {
-  return fetch(
-    "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBcZH5ZGmvxnyC2FoB33L0N6d2yEb6273w",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-};
-
 export default function SignUp() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const enteredEmail = data.get("email");
-    const enteredPassword = data.get("password");
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBcZH5ZGmvxnyC2FoB33L0N6d2yEb6273w",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+
+    dispatch(signUpRequest());
+    history.push("/login");
   };
 
   return (
@@ -78,6 +50,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
           <Box
             component="form"
             noValidate
@@ -85,7 +58,7 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -105,7 +78,7 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -114,6 +87,15 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(event) => {
+                    console.log(event.target.value);
+                    dispatch(
+                      updateUserFormCreate({
+                        key: "email",
+                        value: event.target.value,
+                      })
+                    );
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -125,6 +107,15 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(event) => {
+                    console.log(event.target.value);
+                    dispatch(
+                      updateUserFormCreate({
+                        key: "password",
+                        value: event.target.value,
+                      })
+                    );
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>

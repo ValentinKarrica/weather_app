@@ -15,4 +15,5 @@ const store = configureStore({
   ],
 });
 sagaMiddleware.run(rootSagas)
+
 export default store;
