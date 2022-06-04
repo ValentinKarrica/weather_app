@@ -41,10 +41,19 @@ const LogIn = createSlice({
         },
       };
     },
+    clearUserFormLogin: (state) => {
+      return {
+        ...state,
+        userFormLogIn: {
+          email: "",
+          password: "",
+        },
+      };
+    },
   },
 });
 
-export const { updateUserFormLogIn, setLoading } = LogIn.actions;
+export const { updateUserFormLogIn, setLoading, clearUserFormLogin } = LogIn.actions;
 
 //export actions connect Sagas
 export const actionTypes = {

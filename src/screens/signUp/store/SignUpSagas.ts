@@ -1,5 +1,10 @@
 import { call, put, takeLatest, fork, select } from "redux-saga/effects";
-import { setLoading, actionTypes, selectSignUpFormCreate } from "./SignUpSlice";
+import {
+  setLoading,
+  actionTypes,
+  selectSignUpFormCreate,
+  setRegisterComplete,
+} from "./SignUpSlice";
 
 const signUpRequest = (form: any) => {
   return fetch(
@@ -19,21 +24,25 @@ function* signUp(): any {
   const state = yield select();
   const userCreateForm = selectSignUpFormCreate(state);
 
-  console.log("FORM IN SAGA ", userCreateForm);
-
   try {
-    console.log("SING UP");
-
     yield put(setLoading(true));
 
     const response = yield call(signUpRequest, {
       ...userCreateForm,
       returnSecureToken: true,
     });
-
-    console.log("RESPONSE ", response.json());
+    if (response.ok) {
+      const dataRes = yield response.json();
+      alert(
+        `Success Registration with email ${dataRes.email} \n Please Log In to continue!`
+      );
+      yield put(setRegisterComplete(true));
+    } else {
+      const dataRes = yield response.json();
+      throw dataRes.error.message;
+    }
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 
   yield put(setLoading(false));

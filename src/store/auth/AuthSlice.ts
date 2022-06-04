@@ -13,6 +13,7 @@ export interface UserAuth {
 
 interface SliceState {
   userAuth: UserAuth;
+  logInSuccess: boolean;
 }
 
 const initialState:SliceState = {
@@ -26,11 +27,12 @@ const initialState:SliceState = {
     refreshToken: "",
     registered: false,
   },
+  logInSuccess: false,
 };
 
 const AuthSlice = createSlice({
   initialState,
-  name: "authslice",
+  name: "authSlice",
   reducers: {
     setUserAuth: (state, action: PayloadAction<UserAuth>) => {
       return {
@@ -38,9 +40,15 @@ const AuthSlice = createSlice({
         userAuth: action.payload,
       };
     },
+    setLogInSuccess: (state, action: PayloadAction<boolean>)=>{
+      return{
+        ...state,
+        logInSuccess: action.payload
+      }
+    }
   },
 });
 
-export const { setUserAuth } = AuthSlice.actions;
+export const { setUserAuth, setLogInSuccess } = AuthSlice.actions;
 
 export const authReducer = AuthSlice.reducer;

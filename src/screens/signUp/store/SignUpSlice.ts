@@ -34,10 +34,19 @@ const SingUpSlice = createSlice({
         loading: action.payload,
       };
     },
-    setUserForm: (state, action: PayloadAction<User>) => {
+    setRegisterComplete: (state, action:PayloadAction<boolean>)=>{
       return {
         ...state,
-        userFormCreate: action.payload,
+        registerComplete: action.payload,
+      }
+    },
+    clearUserForm: (state) => {
+      return {
+        ...state,
+        userFormCreate: {
+          email: "",
+          password: "",
+        },
       };
     },
     updateUserFormCreate: (
@@ -55,7 +64,7 @@ const SingUpSlice = createSlice({
   },
 });
 
-export const { setLoading, updateUserFormCreate } = SingUpSlice.actions;
+export const { setLoading, updateUserFormCreate, setRegisterComplete } = SingUpSlice.actions;
 
 export const actionTypes = {
   SIGN_UP_REQUEST: "signup/SIGN_UP_REQUEST",
@@ -75,7 +84,5 @@ export const selectSignUpFormCreate = createSelector(
   [selectSignUp],
   (value) => value.userFormCreate
 );
-
-
 
 export const signupReducer = SingUpSlice.reducer;

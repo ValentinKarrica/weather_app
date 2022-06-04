@@ -13,24 +13,31 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { updateUserFormCreate, signUpRequest } from "./store/SignUpSlice";
+import { updateUserFormCreate, signUpRequest, setRegisterComplete } from "./store/SignUpSlice";
 import { useDispatch } from "react-redux";
+import { RootState } from "../../store/config/rootReducer";
 
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const theme = createTheme();
 
 export default function SignUp() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const {registerComplete,} = useSelector((state:RootState)=>state.signup)
 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     dispatch(signUpRequest());
-    history.push("/login");
   };
+  React.useEffect(()=>{
+    if(registerComplete){
+      history.push("/login");
+      dispatch(setRegisterComplete(false))
+    }
+  },[registerComplete])
 
   return (
     <ThemeProvider theme={theme}>
@@ -88,7 +95,7 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={(event) => {
-                    console.log(event.target.value);
+                 
                     dispatch(
                       updateUserFormCreate({
                         key: "email",
@@ -108,7 +115,7 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={(event) => {
-                    console.log(event.target.value);
+                    
                     dispatch(
                       updateUserFormCreate({
                         key: "password",
@@ -137,7 +144,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={()=>{history.push("/login");}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

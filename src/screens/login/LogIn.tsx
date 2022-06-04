@@ -16,20 +16,26 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { RootState } from "../../store/config/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { logInRequest, updateUserFormLogIn } from "./store/LoginSlice";
-
+import { useHistory } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function LogIn() {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const {userAuth}= useSelector((state:RootState)=> state.auth)
+  const { userAuth, logInSuccess} = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     dispatch(logInRequest());
-    console.log("userAuth: ",userAuth)
+    console.log("userAuth: ", userAuth, logInSuccess);
   };
+  React.useEffect(()=>{
+    if(userAuth.registered){
+      history.replace('/dashboard')
+    }
+  },[userAuth.registered])
 
   return (
     <ThemeProvider theme={theme}>
@@ -110,7 +116,13 @@ export default function LogIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => {
+                    history.push("/signup");
+                  }}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
