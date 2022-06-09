@@ -14,19 +14,15 @@ const Routs = () => {
       <Switch>
         {/* PUBLIC URLS  */}
         <Route exact path="/" component={LandingPage} />
-
         <Route exact path="/login" component={LogIn} />
-
         <Route exact path="/signup" component={SignUp} />
+        {/* <Route path="*">
+          <Redirect to="/" />
+        </Route> */}
 
         {/* PRIVATE URLS  */}
-
-       { userAuth.registered&&<Route exact path="/dashboard" component={Dashboard} />}
-       { userAuth.registered&&<Route exact path='/settings' component={Settings} />}
-
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/settings" component={Settings} />
       </Switch>
     </BrowserRouter>
   );

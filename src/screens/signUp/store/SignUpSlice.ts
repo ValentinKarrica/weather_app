@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, createSelector } from "@reduxjs/toolkit";
-import { User } from "../../../model";
+import { User, FormFieldPayload } from "../../../model";
 import { RootState } from "../../../store/config/rootReducer";
 
 interface SliceState {
@@ -7,11 +7,6 @@ interface SliceState {
   userFormCreate: User;
   userFormCreateError: string;
   registerComplete: boolean;
-}
-
-interface FormFieldPayload<K = any, V = any> {
-  key: K;
-  value: V;
 }
 
 const initialState: SliceState = {
@@ -34,11 +29,11 @@ const SingUpSlice = createSlice({
         loading: action.payload,
       };
     },
-    setRegisterComplete: (state, action:PayloadAction<boolean>)=>{
+    setRegisterComplete: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
         registerComplete: action.payload,
-      }
+      };
     },
     clearUserForm: (state) => {
       return {
@@ -64,7 +59,8 @@ const SingUpSlice = createSlice({
   },
 });
 
-export const { setLoading, updateUserFormCreate, setRegisterComplete } = SingUpSlice.actions;
+export const { setLoading, updateUserFormCreate, setRegisterComplete } =
+  SingUpSlice.actions;
 
 export const actionTypes = {
   SIGN_UP_REQUEST: "signup/SIGN_UP_REQUEST",

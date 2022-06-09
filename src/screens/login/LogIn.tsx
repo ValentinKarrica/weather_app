@@ -23,13 +23,13 @@ const theme = createTheme();
 export default function LogIn() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { userAuth, logInSuccess} = useSelector((state: RootState) => state.auth);
+  const { userAuth } = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     dispatch(logInRequest());
-    console.log("userAuth: ", userAuth, logInSuccess);
+    console.log("userAuth: ", userAuth);
   };
   React.useEffect(()=>{
     if(userAuth.registered){

@@ -1,22 +1,13 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface UserAuth {
-  displayName: string;
-  email: string;
-  expiresIn: string;
-  idToken: string;
-  kind: string;
-  localId: string;
-  refreshToken: string;
-  registered: boolean;
-}
+import { UserAuth } from "../../model";
 
 interface SliceState {
   userAuth: UserAuth;
-  logInSuccess: boolean;
+  userConnected: boolean;
 }
 
-const initialState:SliceState = {
+const initialState: SliceState = {
   userAuth: {
     displayName: "",
     email: "",
@@ -27,7 +18,7 @@ const initialState:SliceState = {
     refreshToken: "",
     registered: false,
   },
-  logInSuccess: false,
+  userConnected: false,
 };
 
 const AuthSlice = createSlice({
@@ -40,15 +31,31 @@ const AuthSlice = createSlice({
         userAuth: action.payload,
       };
     },
-    setLogInSuccess: (state, action: PayloadAction<boolean>)=>{
-      return{
+    setUserConnected: (state, action: PayloadAction<boolean>) => {
+      return {
         ...state,
-        logInSuccess: action.payload
-      }
-    }
+        userConnected: action.payload,
+      };
+    },
+    setClearUserAuth: (state) => {
+      return {
+        ...state,
+        userAuth: {
+          displayName: "",
+          email: "",
+          expiresIn: "",
+          idToken: "",
+          kind: "",
+          localId: "",
+          refreshToken: "",
+          registered: false,
+        },
+      };
+    },
   },
 });
 
-export const { setUserAuth, setLogInSuccess } = AuthSlice.actions;
+export const { setUserAuth, setUserConnected, setClearUserAuth } =
+  AuthSlice.actions;
 
 export const authReducer = AuthSlice.reducer;

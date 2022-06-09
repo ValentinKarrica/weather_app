@@ -20,6 +20,10 @@ import MainListItems from "./listItems";
 
 import { RootState } from "../store/config/rootReducer";
 import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserConnected, setClearUserAuth } from "../store/auth/AuthSlice";
 
 const drawerWidth: number = 240;
 
@@ -72,11 +76,13 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const mdTheme = createTheme();
-
 interface Props {
   children: React.ReactNode;
 }
 const PrivateLayout = ({ children }: Props) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -113,8 +119,18 @@ const PrivateLayout = ({ children }: Props) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard  {userAuth.email}
+              Dashboard {userAuth.email}
             </Typography>
+            <Button
+              onClick={() => {
+                dispatch(setUserConnected(false));
+                dispatch(setClearUserAuth());
+                history.push("/");
+              }}
+              color="inherit"
+            >
+              Log Out
+            </Button>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -137,7 +153,7 @@ const PrivateLayout = ({ children }: Props) => {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems/>
+            <MainListItems />
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
@@ -158,34 +174,6 @@ const PrivateLayout = ({ children }: Props) => {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {children}
-              {/* Chart */}
-              {/* <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >Test {children}</Paper>
-              </Grid> */}
-              {/* Recent Deposits */}
-              {/* <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >Test {children}</Paper>
-              </Grid> */}
-              {/* Recent Orders */}
-              {/* <Grid item xs={12}>
-                <Paper
-                  sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                >Test {children}</Paper>
-              </Grid> */}
             </Grid>
           </Container>
         </Box>
