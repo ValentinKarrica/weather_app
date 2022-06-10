@@ -13,29 +13,25 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { RootState } from "../../store/config/rootReducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logInRequest, updateUserFormLogIn } from "./store/LoginSlice";
 import { useHistory } from "react-router-dom";
+import useAuthEffect from "../../hooks/useAuthEffect";
 
 const theme = createTheme();
 
 export default function LogIn() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { userAuth } = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     dispatch(logInRequest());
-    console.log("userAuth: ", userAuth);
   };
-  React.useEffect(()=>{
-    if(userAuth.registered){
-      history.replace('/dashboard')
-    }
-  },[userAuth.registered])
+
+  useAuthEffect(() => {
+    history.replace("/dashboard");
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

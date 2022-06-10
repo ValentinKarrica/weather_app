@@ -13,31 +13,39 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { updateUserFormCreate, signUpRequest, setRegisterComplete } from "./store/SignUpSlice";
-import { useDispatch } from "react-redux";
+import {
+  updateUserFormCreate,
+  signUpRequest,
+  setRegisterComplete,
+} from "./store/SignUpSlice";
 import { RootState } from "../../store/config/rootReducer";
 
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import useAuthEffect from "../../hooks/useAuthEffect";
 
 const theme = createTheme();
 
 export default function SignUp() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {registerComplete,} = useSelector((state:RootState)=>state.signup)
-
+  const { registerComplete } = useSelector((state: RootState) => state.signup);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(signUpRequest());
   };
-  React.useEffect(()=>{
-    if(registerComplete){
+
+  React.useEffect(() => {
+    if (registerComplete) {
       history.push("/login");
-      dispatch(setRegisterComplete(false))
+      dispatch(setRegisterComplete(false));
     }
-  },[registerComplete])
+  }, [registerComplete]);
+
+  useAuthEffect(() => {
+    history.replace("/dashboard");
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,7 +103,6 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={(event) => {
-                 
                     dispatch(
                       updateUserFormCreate({
                         key: "email",
@@ -115,7 +122,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={(event) => {
-                    
                     dispatch(
                       updateUserFormCreate({
                         key: "password",
@@ -144,7 +150,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2" onClick={()=>{history.push("/login");}}>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>

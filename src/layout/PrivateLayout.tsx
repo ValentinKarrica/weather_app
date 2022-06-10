@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserConnected, setClearUserAuth } from "../store/auth/AuthSlice";
+import { setClearUserAuth, setIsAuthenticated } from "../store/auth/AuthSlice";
 
 const drawerWidth: number = 240;
 
@@ -82,13 +82,20 @@ interface Props {
 const PrivateLayout = ({ children }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-
   const [open, setOpen] = React.useState(true);
+  const { userAuth } = useSelector((state: RootState) => state.auth);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const { userAuth } = useSelector((state: RootState) => state.auth);
+  //Log Out User
+  const logOutHandler = () => {
+    dispatch(setIsAuthenticated(false));
+    dispatch(setClearUserAuth());
+    localStorage.clear();
+    history.push("/");
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -121,14 +128,7 @@ const PrivateLayout = ({ children }: Props) => {
             >
               Dashboard {userAuth.email}
             </Typography>
-            <Button
-              onClick={() => {
-                dispatch(setUserConnected(false));
-                dispatch(setClearUserAuth());
-                history.push("/");
-              }}
-              color="inherit"
-            >
+            <Button onClick={logOutHandler} color="inherit">
               Log Out
             </Button>
             <IconButton color="inherit">

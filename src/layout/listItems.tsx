@@ -15,12 +15,13 @@ const MainListItems = () => {
   const history = useHistory();
   return (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton onClick={() => {}}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItemButton>
+
       <ListItemButton
         onClick={() => {
           history.push("/settings");
@@ -29,8 +30,9 @@ const MainListItems = () => {
         <ListItemIcon>
           <Settings />
         </ListItemIcon>
-        <ListItemText primary="Settins" />
+        <ListItemText primary="Settings" />
       </ListItemButton>
+
       <ListItemButton>
         <ListItemIcon>
           <PeopleIcon />

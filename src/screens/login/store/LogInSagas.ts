@@ -1,5 +1,5 @@
 import { call, put, takeLatest, fork, select } from "redux-saga/effects";
-import { setUserAuth } from "../../../store/auth/AuthSlice";
+import { setUserAuth, setIsAuthenticated } from "../../../store/auth/AuthSlice";
 import {
   actionTypes,
   clearUserFormLogin,
@@ -33,19 +33,22 @@ function* logIn(): any {
     });
     if (response.ok) {
       const userAuth = yield response.json();
-      console.log("Login Sagas Response:", userAuth);
+      const userAuthJson = JSON.stringify(userAuth);
+
+      //Log in Success
+      yield localStorage.setItem("userAuthJson", userAuthJson);
+      yield put(setIsAuthenticated(true));
       yield put(setUserAuth(userAuth));
-      yield put(setLoading(true));
       yield put(clearUserFormLogin);
     } else {
       const err = yield response.json();
-      console.log("Error", err.error.message);
       throw err.error.message;
     }
   } catch (error) {
     alert(error);
-    yield put(setLoading(true));
   }
+
+  yield put(setLoading(false));
 }
 
 function* logInWatcher() {

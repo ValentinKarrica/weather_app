@@ -6,6 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router-dom";
+import useAuthEffect from "../../hooks/useAuthEffect";
 
 const Container = styled.div`
   position: absolute;
@@ -14,7 +15,11 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 700px;
-  background: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.5)), url("/blueSky.png");
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("/blueSky.png");
   background-repeat: no-repeat;
   background-size: cover;
 `;
@@ -24,6 +29,11 @@ const Content = styled.h1`
 
 const LandingPage = () => {
   const history = useHistory();
+
+  useAuthEffect(() => {
+    history.push("/dashboard");
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

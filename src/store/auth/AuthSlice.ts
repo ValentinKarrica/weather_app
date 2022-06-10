@@ -1,10 +1,10 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { UserAuth } from "../../model";
 
 interface SliceState {
   userAuth: UserAuth;
-  userConnected: boolean;
+  isAuthenticated: boolean;
 }
 
 const initialState: SliceState = {
@@ -18,7 +18,7 @@ const initialState: SliceState = {
     refreshToken: "",
     registered: false,
   },
-  userConnected: false,
+  isAuthenticated: false,
 };
 
 const AuthSlice = createSlice({
@@ -31,10 +31,10 @@ const AuthSlice = createSlice({
         userAuth: action.payload,
       };
     },
-    setUserConnected: (state, action: PayloadAction<boolean>) => {
+    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
-        userConnected: action.payload,
+        isAuthenticated: action.payload,
       };
     },
     setClearUserAuth: (state) => {
@@ -55,7 +55,17 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { setUserAuth, setUserConnected, setClearUserAuth } =
+export const { setUserAuth, setIsAuthenticated, setClearUserAuth } =
   AuthSlice.actions;
+
+//export actions connect Sagas
+export const actionTypes = {
+  REFRESH_USER_AUTH: "auth/UPDATE_USER_AUTH ",
+};
+export const localSortUpdate = () => {
+  return {
+    type: actionTypes.REFRESH_USER_AUTH,
+  };
+};
 
 export const authReducer = AuthSlice.reducer;
