@@ -1,5 +1,6 @@
 import { call, put, takeLatest, fork, select } from "redux-saga/effects";
 import { setUserAuth, setIsAuthenticated } from "../../../store/auth/AuthSlice";
+import { logger } from "../../../utils/logger";
 import {
   actionTypes,
   clearUserFormLogin,
@@ -27,11 +28,13 @@ function* logIn(): any {
   yield put(setLoading(true));
 
   try {
+    logger("User login request");
     const response = yield call(logInRequest, {
       ...userLogInForm,
       returnSecureToken: true,
     });
     if (response.ok) {
+      logger("User login success");
       const userAuth = yield response.json();
       const userAuthJson = JSON.stringify(userAuth);
 
@@ -45,7 +48,8 @@ function* logIn(): any {
       throw err.error.message;
     }
   } catch (error) {
-    alert(error);
+    logger.error("User login failure");
+    logger.error(`${error}`);
   }
 
   yield put(setLoading(false));

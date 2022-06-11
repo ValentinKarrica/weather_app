@@ -22,9 +22,6 @@ function App() {
         const localStorageUserAuth: UserAuth = JSON.parse(localSore);
         dispatch(setIsAuthenticated(true));
         dispatch(setUserAuth(localStorageUserAuth));
-        console.log("User is Connected", isAuthenticated, userAuth);
-      } else {
-        console.log("User is disconnected", isAuthenticated, userAuth);
       }
     }
   }, [isAuthenticated]);
