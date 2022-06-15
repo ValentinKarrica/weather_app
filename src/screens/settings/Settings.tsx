@@ -2,27 +2,77 @@ import PrivateLayout from "../../layout/PrivateLayout";
 import { useState } from "react";
 import {
   Button,
-  Grid,
-  Paper,
   TextField,
   ThemeProvider,
   Container,
   CssBaseline,
   Box,
   createTheme,
-  Avatar,
   Typography,
+  IconButton,
 } from "@mui/material";
+import { AddCircleOutlined, Cancel } from "@mui/icons-material";
 import styled from "styled-components";
 
+import { setUserDetail, userDetailPostRequest } from "./store/SettingsSlice";
+
+//Redux
+import { useDispatch } from "react-redux";
+import { RootState } from "../../store/config/rootReducer";
+
 const theme = createTheme();
-const H2 = styled.h2``;
+
+const H2 = styled.h2`
+  color: rgb(154, 154, 154);
+`;
+const InputImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #dadce0;
+  border-radius: 5px;
+  padding: 1rem;
+`;
+const InputImageWrapper = styled.div`
+  display: flex;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+`;
+const Label = styled.label``;
+
+const InputImage = styled.input`
+  display: none;
+`;
 
 const Settings = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [image, setImage]: any = useState(null);
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const userDetail = {
+      firstName: firstName,
+      lastName: lastName,
+      url: URL.createObjectURL(image),
+    };
+    dispatch(setUserDetail(userDetail));
+    dispatch(userDetailPostRequest());
+  };
+  const onImageChange = (e: any) => {
+    setImage(e.target.files[0]);
+  };
+
   return (
     <PrivateLayout>
       <ThemeProvider theme={theme}>
@@ -60,6 +110,7 @@ const Settings = () => {
               />
               <TextField
                 margin="normal"
+                style={{ marginBottom: "24px" }}
                 required
                 fullWidth
                 name="lastName"
@@ -71,8 +122,43 @@ const Settings = () => {
                 }}
               />
             </Box>
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>+</Avatar>
+            <Typography component="h1" variant="h5">
+              Update your image
+            </Typography>
+            <InputImageContainer>
+              {image ? (
+                <ImageWrapper>
+                  <Box>
+                    <IconButton
+                      onClick={() => {
+                        setImage(null);
+                      }}
+                    >
+                      <Cancel color="error" />
+                    </IconButton>
+                  </Box>
+
+                  <Image alt="not fount" src={URL.createObjectURL(image)} />
+                </ImageWrapper>
+              ) : (
+                <InputImageWrapper>
+                  <Label htmlFor="addImage">
+                    <AddCircleOutlined
+                      style={{ fontSize: "50px", color: "#9A9A9A" }}
+                    />
+                  </Label>
+                  <InputImage
+                    type="file"
+                    id="addImage"
+                    multiple
+                    accept="image/*"
+                    onChange={onImageChange}
+                  />
+                </InputImageWrapper>
+              )}
+            </InputImageContainer>
             <Button
+              onClick={handleSubmit}
               type="submit"
               fullWidth
               variant="contained"

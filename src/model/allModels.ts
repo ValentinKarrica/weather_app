@@ -7,11 +7,6 @@ export interface FormFieldPayload<K = any, V = any> {
   key: K;
   value: V;
 }
-export interface UserDetail {
-  firstName: string;
-  lastName: string;
-  picture: string;
-}
 
 export interface UserAuth {
   displayName: string;
@@ -22,4 +17,10 @@ export interface UserAuth {
   localId: string;
   refreshToken: string;
   registered: boolean;
+}
+
+export interface UserDetail {
+  firstName: string;
+  lastName: string;
+  url: URL | string;
 }
