@@ -24,10 +24,20 @@ const SettingsSlice = createSlice({
         userDetail: action.payload,
       };
     },
+    clearUserDetail: (state) => {
+      return {
+        ...state,
+        userDetail: {
+          firstName: "",
+          lastName: "",
+          url: "",
+        },
+      };
+    },
   },
 });
 
-export const { setUserDetail } = SettingsSlice.actions;
+export const { setUserDetail, clearUserDetail } = SettingsSlice.actions;
 
 //Πρωτα φτιαχνω τους τυπους ενεργειων σε σειρες και τα εξαγω.
 export const actionTypes = {
