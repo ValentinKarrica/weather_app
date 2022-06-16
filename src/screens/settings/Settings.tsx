@@ -13,18 +13,20 @@ import {
 } from "@mui/material";
 import { AddCircleOutlined, Cancel } from "@mui/icons-material";
 import styled from "styled-components";
+import { UserAuth } from "../../model";
 
 import { setUserDetail, userDetailPostRequest } from "./store/SettingsSlice";
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { RootState } from "../../store/config/rootReducer";
 
 //Redux
 import { useDispatch } from "react-redux";
-import { RootState } from "../../store/config/rootReducer";
+import { useSelector } from "react-redux";
+import { setUserAuth } from "../../store/auth/AuthSlice";
 
 const theme = createTheme();
 
-const H2 = styled.h2`
-  color: rgb(154, 154, 154);
-`;
 const InputImageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -53,22 +55,37 @@ const Label = styled.label``;
 const InputImage = styled.input`
   display: none;
 `;
+async function upload(file: File, userAuth: UserAuth) {
+  const imageRef = ref(storage, `image/${userAuth.localId}`);
+
+  const snapShot = await uploadBytes(imageRef, file);
+  const imageUrl: any = await getDownloadURL(imageRef);
+  console.log("urlinfunction", imageUrl);
+  setUserAuth({ ...userAuth, profilePicture: imageUrl });
+}
 
 const Settings = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [image, setImage]: any = useState(null);
+  const [image, setImage]: any = useState("");
+  const { userAuth } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    const userDetail = {
-      firstName: firstName,
-      lastName: lastName,
-      url: URL.createObjectURL(image),
-    };
-    dispatch(setUserDetail(userDetail));
-    dispatch(userDetailPostRequest());
-  };
+    if (image === "") {
+      return;
+    }
+    const uploadImage = upload(image, userAuth);
+
+    console.log("AfterUploadImage:", userAuth);
+    // const userDetail = {
+    //   firstName: firstName,
+    //   lastName: lastName,
+    //   url: `image/${userAuth.localId}`,
+    // };
+    // dispatch(setUserDetail(userDetail));
+    // dispatch(userDetailPostRequest());
+  };;
   const onImageChange = (e: any) => {
     setImage(e.target.files[0]);
   };
@@ -171,6 +188,6 @@ const Settings = () => {
       </ThemeProvider>
     </PrivateLayout>
   );
-};
+};;;
 
 export default Settings;

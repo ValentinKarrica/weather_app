@@ -36,6 +36,7 @@ function* logIn(): any {
     if (response.ok) {
       logger("User login success");
       const userAuth = yield response.json();
+      console.log(userAuth);
       const userAuthJson = JSON.stringify(userAuth);
 
       //Log in Success

@@ -20,7 +20,7 @@ import MainListItems from "./listItems";
 
 import { RootState } from "../store/config/rootReducer";
 import { useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setClearUserAuth, setIsAuthenticated } from "../store/auth/AuthSlice";
@@ -126,7 +126,8 @@ const PrivateLayout = ({ children }: Props) => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard {userAuth.email}
+              {userAuth.displayName}
+              <Avatar alt="not fount" src={userAuth.profilePicture} />
             </Typography>
             <Button onClick={logOutHandler} color="inherit">
               Log Out

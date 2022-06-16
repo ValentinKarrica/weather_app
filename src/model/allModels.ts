@@ -16,11 +16,12 @@ export interface UserAuth {
   kind: string;
   localId: string;
   refreshToken: string;
+  profilePicture: string;
   registered: boolean;
 }
 
 export interface UserDetail {
   firstName: string;
   lastName: string;
-  url: URL | string;
+  url: string;
 }

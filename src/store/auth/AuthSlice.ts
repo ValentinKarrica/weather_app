@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { UserAuth } from "../../model";
+import { RootState } from "../config/rootReducer";
 
 interface SliceState {
   userAuth: UserAuth;
@@ -15,6 +16,7 @@ const initialState: SliceState = {
     idToken: "",
     kind: "",
     localId: "",
+    profilePicture: "",
     refreshToken: "",
     registered: false,
   },
@@ -47,6 +49,7 @@ const AuthSlice = createSlice({
           idToken: "",
           kind: "",
           localId: "",
+          profilePicture: "",
           refreshToken: "",
           registered: false,
         },
@@ -67,5 +70,14 @@ export const localSortUpdate = () => {
     type: actionTypes.REFRESH_USER_AUTH,
   };
 };
+
+export const selectAuth = (state: RootState) => {
+  return state.auth;
+};
+
+export const selectUserAuth = createSelector(
+  [selectAuth],
+  (value) => value.userAuth
+);
 
 export const authReducer = AuthSlice.reducer;
