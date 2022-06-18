@@ -7,6 +7,7 @@ interface SliceState {
   userFormCreate: User;
   userFormCreateError: string;
   registerComplete: boolean;
+  errorMessage: string;
 }
 
 const initialState: SliceState = {
@@ -17,6 +18,7 @@ const initialState: SliceState = {
   },
   userFormCreateError: "",
   registerComplete: false,
+  errorMessage: "",
 };
 
 const SingUpSlice = createSlice({
@@ -56,11 +58,21 @@ const SingUpSlice = createSlice({
         },
       };
     },
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+    },
   },
 });
 
-export const { setLoading, updateUserFormCreate, setRegisterComplete } =
-  SingUpSlice.actions;
+export const {
+  setLoading,
+  updateUserFormCreate,
+  setRegisterComplete,
+  setErrorMessage,
+} = SingUpSlice.actions;
 
 export const actionTypes = {
   SIGN_UP_REQUEST: "signup/SIGN_UP_REQUEST",

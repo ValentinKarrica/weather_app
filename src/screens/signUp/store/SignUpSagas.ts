@@ -4,7 +4,9 @@ import {
   actionTypes,
   selectSignUpFormCreate,
   setRegisterComplete,
+  setErrorMessage,
 } from "./SignUpSlice";
+import { logger } from "../../../utils/logger";
 
 const signUpRequest = (form: any) => {
   return fetch(
@@ -26,6 +28,7 @@ function* signUp(): any {
 
   try {
     yield put(setLoading(true));
+    logger("User signUp failure");
 
     const response = yield call(signUpRequest, {
       ...userCreateForm,
@@ -33,16 +36,16 @@ function* signUp(): any {
     });
     if (response.ok) {
       const dataRes = yield response.json();
-      alert(
-        `Success Registration with email ${dataRes.email} \n Please Log In to continue!`
-      );
       yield put(setRegisterComplete(true));
+      logger("User signUp success");
+      yield put(setErrorMessage(""));
     } else {
       const dataRes = yield response.json();
       throw dataRes.error.message;
     }
   } catch (error) {
-    alert(error);
+    yield put(setErrorMessage(`${error}`));
+    logger.error(`User signUp failure: ${error}`);
   }
 
   yield put(setLoading(false));

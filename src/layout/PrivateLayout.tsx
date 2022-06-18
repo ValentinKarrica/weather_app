@@ -124,10 +124,14 @@ const PrivateLayout = ({ children }: Props) => {
               variant="h6"
               color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, display: "flex" }}
             >
+              <Avatar
+                alt="not fount"
+                src={userAuth.profilePicture}
+                sx={{ marginRight: "10px" }}
+              />
               {userAuth.displayName}
-              <Avatar alt="not fount" src={userAuth.profilePicture} />
             </Typography>
             <Button onClick={logOutHandler} color="inherit">
               Log Out

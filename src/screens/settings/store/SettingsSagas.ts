@@ -1,6 +1,7 @@
 import { takeLatest, fork, select, call, put } from "redux-saga/effects";
 import { selectUserAuth, setUserAuth } from "../../../store/auth/AuthSlice";
 import { actionTypes, selectUserDetail } from "./SettingsSlice";
+import { logger } from "../../../utils/logger";
 
 const postRequest = (data: any) => {
   return fetch(
@@ -27,6 +28,7 @@ function* postData(): any {
     returnSecureToken: true,
   };
   try {
+    logger("User Update details request");
     const response = yield call(postRequest, postData);
     if (response.ok) {
       const res = yield response.json();
@@ -37,12 +39,13 @@ function* postData(): any {
           profilePicture: res.photoUrl,
         })
       );
+      logger("Update details success");
     } else {
       const err = yield response.json();
       throw err.error.message;
     }
   } catch (error) {
-    console.log(error);
+    logger.error("User Update details failure\n", `Error: ${error}`);
   }
 }
 

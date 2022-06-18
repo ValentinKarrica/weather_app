@@ -49,8 +49,7 @@ function* logIn(): any {
       throw err.error.message;
     }
   } catch (error) {
-    logger.error("User login failure");
-    logger.error(`${error}`);
+    logger.error("User login failure\n", `Error: ${error}`);
   }
 
   yield put(setLoading(false));
