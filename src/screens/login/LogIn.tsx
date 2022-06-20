@@ -17,12 +17,21 @@ import { useDispatch } from "react-redux";
 import { logInRequest, updateUserFormLogIn } from "./store/LoginSlice";
 import { useHistory } from "react-router-dom";
 import useAuthEffect from "../../hooks/useAuthEffect";
+import styled from "styled-components";
+import { RootState } from "../../store/config/rootReducer";
+import { useSelector } from "react-redux";
 
 const theme = createTheme();
+
+const ErrorMessage = styled.div`
+  color: red;
+`;
 
 export default function LogIn() {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const { errorMessage } = useSelector((state: RootState) => state.login);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -125,6 +134,7 @@ export default function LogIn() {
             </Grid>
           </Box>
         </Box>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Container>
     </ThemeProvider>
   );

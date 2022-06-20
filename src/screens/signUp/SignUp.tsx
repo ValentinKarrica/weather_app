@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useAuthEffect from "../../hooks/useAuthEffect";
 
 const theme = createTheme();
+
 const ErrorMessage = styled.div`
   color: red;
 `;

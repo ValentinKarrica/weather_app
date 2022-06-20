@@ -7,6 +7,7 @@ interface SliceState {
   userFormLogIn: User;
   userFormLogInError: string;
   logInComplete: boolean;
+  errorMessage: string;
 }
 
 const initialState: SliceState = {
@@ -17,6 +18,7 @@ const initialState: SliceState = {
   },
   userFormLogInError: "",
   logInComplete: false,
+  errorMessage: "",
 };
 
 const LogIn = createSlice({
@@ -50,10 +52,21 @@ const LogIn = createSlice({
         },
       };
     },
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+    },
   },
 });
 
-export const { updateUserFormLogIn, setLoading, clearUserFormLogin } = LogIn.actions;
+export const {
+  updateUserFormLogIn,
+  setLoading,
+  clearUserFormLogin,
+  setErrorMessage,
+} = LogIn.actions;
 
 //export actions connect Sagas
 export const actionTypes = {

@@ -5,6 +5,7 @@ import {
   actionTypes,
   clearUserFormLogin,
   selectUserLogInForm,
+  setErrorMessage,
   setLoading,
 } from "./LoginSlice";
 
@@ -44,12 +45,15 @@ function* logIn(): any {
       yield put(setIsAuthenticated(true));
       yield put(setUserAuth(userAuth));
       yield put(clearUserFormLogin);
+      yield put(setErrorMessage(""));
     } else {
       const err = yield response.json();
       throw err.error.message;
     }
   } catch (error) {
-    logger.error("User login failure\n", `Error: ${error}`);
+    yield put(setErrorMessage(`${error}`));
+
+    logger.error("User login failure", `Error: ${error}`);
   }
 
   yield put(setLoading(false));
