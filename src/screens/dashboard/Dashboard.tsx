@@ -1,7 +1,12 @@
 import PrivateLayout from "../../layout/PrivateLayout";
+import MainDash from "./components/MainDash";
 
 const Dashboard = () => {
-  return <PrivateLayout>TestDashboard</PrivateLayout>;
+  return (
+    <PrivateLayout>
+      <MainDash />
+    </PrivateLayout>
+  );
 };
 
 

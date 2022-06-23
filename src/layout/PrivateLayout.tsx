@@ -15,7 +15,7 @@ import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import {  secondaryListItems } from "./listItems";
+// import {  secondaryListItems } from "./listItems";
 import MainListItems from "./listItems";
 
 import { RootState } from "../store/config/rootReducer";
@@ -159,8 +159,7 @@ const PrivateLayout = ({ children }: Props) => {
           <Divider />
           <List component="nav">
             <MainListItems />
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box

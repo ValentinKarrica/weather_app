@@ -5,8 +5,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import LayersIcon from "@mui/icons-material/Layers";
+import ForumIcon from "@mui/icons-material/Forum";
+import AirIcon from "@mui/icons-material/Air";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Settings } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
@@ -15,11 +15,22 @@ const MainListItems = () => {
   const history = useHistory();
   return (
     <React.Fragment>
-      <ListItemButton onClick={() => {}}>
+      <ListItemButton
+        onClick={() => {
+          history.push("/dashboard");
+        }}
+      >
         <ListItemIcon>
-          <DashboardIcon />
+          <AirIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Weather" />
+      </ListItemButton>
+
+      <ListItemButton>
+        <ListItemIcon>
+          <ForumIcon />{" "}
+        </ListItemIcon>
+        <ListItemText primary="Chat" />
       </ListItemButton>
 
       <ListItemButton
@@ -32,29 +43,13 @@ const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Settings" />
       </ListItemButton>
-
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItemButton>
     </React.Fragment>
   );
 };
 export default MainListItems;
+
+
+
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
