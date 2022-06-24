@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit'
+import { dashboardReducer } from "../../screens/dashboard/store/DashboardSlice";
 import { logInReducer } from '../../screens/login/store/LoginSlice';
 import { settingsReducer } from "../../screens/settings/store/SettingsSlice";
 import { signupReducer } from "../../screens/signUp/store/SignUpSlice";
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   login: logInReducer,
   auth: authReducer,
   settings: settingsReducer,
+  dashboard: dashboardReducer,
 });
 
 

@@ -7,10 +7,13 @@ import {
   Button,
 } from "@mui/material";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import ScreenSearchDesktopSharpIcon from "@mui/icons-material/ScreenSearchDesktopSharp";
+import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 
 import styled from "styled-components";
 import { useState } from "react";
+import { locationRequest, setSearchLocation } from "../store/DashboardSlice";
+import { useDispatch } from "react-redux";
+import BasicModal from "./BasicModal";
 
 const MainContainer = styled.div`
   display: flex;
@@ -37,9 +40,12 @@ const Title = styled.h2`
   flex: 1;
   margin: initial;
 `;
-const MyButton = styled.button``;
+const Div = styled.div`
+  display: flex;
+`;
 
 const MainDash = () => {
+  const dispatch = useDispatch();
   const [selectValue, setSelectValue] = useState("Today");
   const location = "";
 
@@ -47,6 +53,12 @@ const MainDash = () => {
     console.log(event.target.value);
     setSelectValue(event.target.value);
   };
+
+  const onSearchHandler = (event: any) => {
+    event.preventDefault();
+    dispatch(locationRequest());
+  };
+
   return (
     <MainContainer>
       <FirstNav>
@@ -61,11 +73,21 @@ const MainDash = () => {
         )}
         <Box
           component="form"
-          onSubmit={() => {}}
+          onSubmit={onSearchHandler}
           noValidate
           sx={{ display: "flex", flex: 1.5 }}
         >
-          <TextField sx={{ flex: 1 }} label="Type Location"></TextField>
+          <TextField
+            sx={{ flex: 1 }}
+            label={
+              <Div>
+                <SearchSharpIcon /> Type Location
+              </Div>
+            }
+            onChange={(event) => {
+              dispatch(setSearchLocation(event.target.value));
+            }}
+          />
           <Button
             type="submit"
             sx={{ border: "1px solid ", marginLeft: "3px" }}
@@ -74,6 +96,7 @@ const MainDash = () => {
           </Button>
         </Box>
       </FirstNav>
+
       <SecondNav>
         <ToggleButtonGroup
           value={selectValue}
@@ -96,6 +119,7 @@ const MainDash = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </SecondNav>
+      <BasicModal />
     </MainContainer>
   );
 };
