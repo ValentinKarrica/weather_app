@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { ActionPattern } from "redux-saga/effects";
-import { SearchResLocation } from "../../../model";
+import { UserLocation } from "../../../model";
 import { RootState } from "../../../store/config/rootReducer";
 
 interface SliceState {
   searchLocation: string;
-  searchResLocation: Array<SearchResLocation>;
-  userLocation: SearchResLocation;
+  searchResLocation: Array<UserLocation>;
+  userLocation: UserLocation;
   modalOpen: boolean;
 }
 
@@ -37,14 +37,14 @@ const DashboardSlice = createSlice({
     },
     setSearchResLocation: (
       state,
-      action: PayloadAction<Array<SearchResLocation>>
+      action: PayloadAction<Array<UserLocation>>
     ) => {
       return {
         ...state,
         searchResLocation: action.payload,
       };
     },
-    setUserLocation: (state, action: PayloadAction<SearchResLocation>) => {
+    setUserLocation: (state, action: PayloadAction<UserLocation>) => {
       return {
         ...state,
         userLocation: action.payload,

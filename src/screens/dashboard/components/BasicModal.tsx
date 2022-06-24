@@ -1,15 +1,23 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Button, Modal } from "@mui/material";
 
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/config/rootReducer";
-import { setModalOpen } from "../store/DashboardSlice";
+import { setModalOpen, setUserLocation } from "../store/DashboardSlice";
+import { UserLocation } from "../../../model";
 
-const Div = styled.div``;
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Container = styled.div`
+  display: flex;
+`;
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,32 +36,48 @@ export default function BasicModal() {
   const { searchResLocation, modalOpen } = useSelector(
     (state: RootState) => state.dashboard
   );
-  const handleClose = () => {
+  const handleClose = (location: UserLocation) => {
     dispatch(setModalOpen(false));
+    dispatch(setUserLocation(location));
   };
 
   return (
     <div>
       <Modal
         open={modalOpen}
-        onClose={handleClose}
+        onClose={() => {
+          dispatch(setModalOpen(false));
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "5px",
+            }}
+            id="modal-modal-description"
+          >
+            Select your Location
+          </Typography>
+          <Div>
             {searchResLocation.map((location, index) => {
               return (
-                <div key={index}>
-                  {location.Type}: {location.LocalizedName} Country:{" "}
-                  {location.Country.LocalizedName}
-                </div>
+                <Button
+                  onClick={() => {
+                    handleClose(location);
+                  }}
+                  variant="outlined"
+                  sx={{ textTransform: "initial", marginTop: "5px" }}
+                  key={index}
+                >
+                  {`${location.LocalizedName}  ${location.Country.LocalizedName}`}
+                </Button>
               );
             })}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          </Div>
         </Box>
       </Modal>
     </div>

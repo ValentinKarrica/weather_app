@@ -8,12 +8,15 @@ import {
 } from "@mui/material";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 
 import styled from "styled-components";
 import { useState } from "react";
 import { locationRequest, setSearchLocation } from "../store/DashboardSlice";
 import { useDispatch } from "react-redux";
 import BasicModal from "./BasicModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/config/rootReducer";
 
 const MainContainer = styled.div`
   display: flex;
@@ -37,34 +40,40 @@ const SecondNav = styled.div`
 `;
 
 const Title = styled.h2`
-  flex: 1;
   margin: initial;
+  margin-right: 1rem;
 `;
 const Div = styled.div`
   display: flex;
 `;
 
 const MainDash = () => {
+  const { userLocation, searchLocation } = useSelector(
+    (state: RootState) => state.dashboard
+  );
   const dispatch = useDispatch();
   const [selectValue, setSelectValue] = useState("Today");
   const location = "";
 
   const selectHandler = (event: any) => {
-    console.log(event.target.value);
     setSelectValue(event.target.value);
   };
 
   const onSearchHandler = (event: any) => {
     event.preventDefault();
     dispatch(locationRequest());
+    dispatch(setSearchLocation(""));
   };
 
   return (
     <MainContainer>
       <FirstNav>
         <Title>ValeWeather</Title>
-        {location ? (
-          location
+        {userLocation.Key ? (
+          <ListItemIcon sx={{ flex: 1, color: "#1976d2" }}>
+            <MyLocationIcon />
+            {`${userLocation.LocalizedName} ${userLocation.Country.LocalizedName}`}
+          </ListItemIcon>
         ) : (
           <ListItemIcon sx={{ flex: 1 }}>
             <AddLocationAltIcon />
@@ -78,6 +87,7 @@ const MainDash = () => {
           sx={{ display: "flex", flex: 1.5 }}
         >
           <TextField
+            value={searchLocation}
             sx={{ flex: 1 }}
             label={
               <Div>
@@ -105,21 +115,22 @@ const MainDash = () => {
           aria-label="text alignment"
           sx={{ flex: 1 }}
         >
-          <ToggleButton sx={{ flex: 1 }} value="Today">
+          <ToggleButton color="primary" sx={{ flex: 1 }} value="Today">
             Today
           </ToggleButton>
-          <ToggleButton sx={{ flex: 1 }} value="Hourly">
+          <ToggleButton color="primary" sx={{ flex: 1 }} value="Hourly">
             Hourly
           </ToggleButton>
-          <ToggleButton sx={{ flex: 1 }} value="Daily">
+          <ToggleButton color="primary" sx={{ flex: 1 }} value="Daily">
             Daily
           </ToggleButton>
-          <ToggleButton sx={{ flex: 1 }} value="Monthly">
+          <ToggleButton color="primary" sx={{ flex: 1 }} value="Monthly">
             Monthly
           </ToggleButton>
         </ToggleButtonGroup>
       </SecondNav>
       <BasicModal />
+      {userLocation.Key && userLocation.LocalizedName}
     </MainContainer>
   );
 };

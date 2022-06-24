@@ -3,7 +3,7 @@ interface IdLocalizedName {
   LocalizedName: string;
 }
 
-export interface SearchResLocation {
+export interface UserLocation {
   Version: number;
   Key: string;
   Type: string;
