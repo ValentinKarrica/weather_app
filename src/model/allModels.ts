@@ -25,3 +25,8 @@ export interface UserDetail {
   lastName: string;
   url: string;
 }
+
+export interface Icons {
+  iconNumber: number;
+  icon: string;
+}

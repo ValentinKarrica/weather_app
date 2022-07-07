@@ -9,6 +9,7 @@ import {
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
+import DailyWeather from "./DailyWeather";
 
 import styled from "styled-components";
 import { useState } from "react";
@@ -53,7 +54,6 @@ const MainDash = () => {
   );
   const dispatch = useDispatch();
   const [selectValue, setSelectValue] = useState("Today");
-  const location = "";
 
   const selectHandler = (event: any) => {
     setSelectValue(event.target.value);
@@ -130,7 +130,7 @@ const MainDash = () => {
         </ToggleButtonGroup>
       </SecondNav>
       <BasicModal />
-      {userLocation.Key && userLocation.LocalizedName}
+      {selectValue === "Today" && <DailyWeather />}
     </MainContainer>
   );
 };

@@ -5,18 +5,20 @@ import { Button, Modal } from "@mui/material";
 
 import styled from "styled-components";
 
+//redux
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/config/rootReducer";
-import { setModalOpen, setUserLocation } from "../store/DashboardSlice";
+import {
+  setModalOpen,
+  setUserLocation,
+  dailyRequest,
+} from "../store/DashboardSlice";
 import { UserLocation } from "../../../model";
+
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Container = styled.div`
-  display: flex;
 `;
 
 const style = {
@@ -39,6 +41,8 @@ export default function BasicModal() {
   const handleClose = (location: UserLocation) => {
     dispatch(setModalOpen(false));
     dispatch(setUserLocation(location));
+    console.log(location);
+    dispatch(dailyRequest());
   };
 
   return (
