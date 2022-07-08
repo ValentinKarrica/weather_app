@@ -46,6 +46,8 @@ export interface LocationDailyWeather {
         Icon: number;
         IconPhrase: string;
         HasPrecipitation: false;
+        PrecipitationType: string;
+        PrecipitationIntensity: string;
       };
       Night: {
         Icon: number;

@@ -27,7 +27,6 @@ const dayRequest = (key: string) => {
 function* locationRequest(): any {
   const state = yield select();
   const searchLocation = selectSearchLocation(state);
-  console.log("Location: ", searchLocation);
   try {
     const response = yield call(locRequest, searchLocation);
     if (response.ok) {

@@ -55,6 +55,8 @@ const initialState: SliceState = {
           Icon: 0,
           IconPhrase: "",
           HasPrecipitation: false,
+          PrecipitationType: "",
+          PrecipitationIntensity: "",
         },
         Night: {
           Icon: 0,

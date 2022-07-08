@@ -41,7 +41,6 @@ export default function BasicModal() {
   const handleClose = (location: UserLocation) => {
     dispatch(setModalOpen(false));
     dispatch(setUserLocation(location));
-    console.log(location);
     dispatch(dailyRequest());
   };
 
