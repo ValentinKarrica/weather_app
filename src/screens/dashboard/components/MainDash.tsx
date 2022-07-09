@@ -131,6 +131,9 @@ const MainDash = () => {
       </SecondNav>
       <BasicModal />
       {selectValue === "Today" && <DailyWeather />}
+      {selectValue === "Hourly" && <h2>Hourly weather coming soon</h2>}
+      {selectValue === "Daily" && <h2>Daily weather coming soon</h2>}
+      {selectValue === "Monthly" && <h2>Monthly weather coming soon</h2>}
     </MainContainer>
   );
 };
