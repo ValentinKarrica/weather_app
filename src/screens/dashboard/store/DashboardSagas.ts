@@ -11,14 +11,14 @@ const apikey = "apikey=rGqBbzVwAykVJQNdYoViA0ZwPA1gx4wR&q";
 
 const locRequest = (location: string) => {
   const url =
-    "http://dataservice.accuweather.com/locations/v1/cities/autocomplete";
+    "https://dataservice.accuweather.com/locations/v1/cities/autocomplete";
   const query = `?${apikey}=${location}`;
 
   return fetch(url + query);
 };
 
 const dayRequest = (key: string) => {
-  const url = "http://dataservice.accuweather.com/forecasts/v1/daily/1day/";
+  const url = "https://dataservice.accuweather.com/forecasts/v1/daily/1day/";
   const query = `${key}?${apikey}&metric=true`;
 
   return fetch(url + query);

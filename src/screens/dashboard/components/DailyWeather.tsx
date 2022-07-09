@@ -23,6 +23,7 @@ const Title = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: stretch;
   border-bottom: 2px solid rgb(255, 204, 160);
@@ -52,7 +53,7 @@ const TemSign = styled.div`
 `;
 const H1 = styled.h2`
   display: flex;
-  flex: 0.5;
+  flex: 1;
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 204, 160, 0.2);
@@ -79,87 +80,94 @@ const DailyWeather = () => {
   );
 
   return (
-    <MainContainer>
-      <Title>
-        <div>Current Weather</div>
-        <div>{`${userLocation.LocalizedName} ${userLocation.Country.LocalizedName}`}</div>
-        <div> {formattedDate}</div>
-      </Title>
-      <Container>
-        <H1>Day</H1>
-        <FirstSection>
-          <div>
-            {icons.map((item, index) => {
-              if (
-                item.iconNumber ===
-                locationDailyWeather.DailyForecasts[0].Day.Icon
-              ) {
-                return (
-                  <img
-                    key={index}
-                    src={require(`../../../assets${item.icon}`)}
-                    alt="Logo"
-                  />
-                );
-              }
-            })}
-          </div>
-          <Tem>
-            {locationDailyWeather.DailyForecasts[0].Temperature.Maximum.Value}°
-          </Tem>
-          <TemSign>C</TemSign>
-        </FirstSection>
-        <SecondSection>
-          <div>{locationDailyWeather.DailyForecasts[0].Day.IconPhrase}</div>
-          <div>
-            {locationDailyWeather.DailyForecasts[0].Day.PrecipitationIntensity}
-          </div>
-          <div>
-            {locationDailyWeather.DailyForecasts[0].Day.PrecipitationType}
-          </div>
-        </SecondSection>
-      </Container>
-      <Container>
-        <H1>Night</H1>
-        <FirstSection>
-          <div>
-            {icons.map((item, index) => {
-              if (
-                item.iconNumber ===
-                locationDailyWeather.DailyForecasts[0].Night.Icon
-              ) {
-                return (
-                  <img
-                    key={index}
-                    src={require(`../../../assets${item.icon}`)}
-                    alt="Logo"
-                  />
-                );
-              }
-            })}
-          </div>
-          <Tem>
-            {locationDailyWeather.DailyForecasts[0].Temperature.Minimum.Value}°
-          </Tem>
-          <TemSign>C</TemSign>
-        </FirstSection>
-        <SecondSection>
-          <div>{locationDailyWeather.DailyForecasts[0].Night.IconPhrase}</div>
-          <div>
-            {
-              locationDailyWeather.DailyForecasts[0].Night
-                .PrecipitationIntensity
-            }
-          </div>
-          <div>
-            {locationDailyWeather.DailyForecasts[0].Night.PrecipitationType}
-          </div>
-        </SecondSection>
-      </Container>
-      <Container>
-        <Text>{locationDailyWeather.Headline.Text}</Text>
-      </Container>
-    </MainContainer>
+    <div>
+      {userLocation.Key ? (
+        <MainContainer>
+          <Title>
+            <div>Current Weather</div>
+            <div>{`${userLocation.LocalizedName} ${userLocation.Country.LocalizedName}`}</div>
+            <div> {formattedDate}</div>
+          </Title>
+          <Container>
+            <H1>Day</H1>
+            <FirstSection>
+              <div>
+                {icons.map((item, index) => {
+                  if (
+                    item.iconNumber ===
+                    locationDailyWeather.DailyForecasts[0].Day.Icon
+                  ) {
+                    return (
+                      <img
+                        key={index}
+                        src={require(`../../../assets${item.icon}`)}
+                        alt="Logo"
+                      />
+                    );
+                  }
+                })}
+              </div>
+              <Tem>{tem + 1}°</Tem>
+              <TemSign>C</TemSign>
+            </FirstSection>
+            <SecondSection>
+              <div>{locationDailyWeather.DailyForecasts[0].Day.IconPhrase}</div>
+              <div>
+                {
+                  locationDailyWeather.DailyForecasts[0].Day
+                    .PrecipitationIntensity
+                }
+              </div>
+              <div>
+                {locationDailyWeather.DailyForecasts[0].Day.PrecipitationType}
+              </div>
+            </SecondSection>
+          </Container>
+          <Container>
+            <H1>Night</H1>
+            <FirstSection>
+              <div>
+                {icons.map((item, index) => {
+                  if (
+                    item.iconNumber ===
+                    locationDailyWeather.DailyForecasts[0].Night.Icon
+                  ) {
+                    return (
+                      <img
+                        key={index}
+                        src={require(`../../../assets${item.icon}`)}
+                        alt="Logo"
+                      />
+                    );
+                  }
+                })}
+              </div>
+              <Tem>{tem - 2}°</Tem>
+              <TemSign>C</TemSign>
+            </FirstSection>
+            <SecondSection>
+              <div>
+                {locationDailyWeather.DailyForecasts[0].Night.IconPhrase}
+              </div>
+              <div>
+                {
+                  locationDailyWeather.DailyForecasts[0].Night
+                    .PrecipitationIntensity
+                }
+              </div>
+              <div>
+                {locationDailyWeather.DailyForecasts[0].Night.PrecipitationType}
+              </div>
+            </SecondSection>
+          </Container>
+          <Container>
+            <Text>{locationDailyWeather.Headline.Text}</Text>
+          </Container>
+        </MainContainer>
+      ) : (
+        <h1>Search for your location</h1>
+      )}
+    </div>
   );
 };
 

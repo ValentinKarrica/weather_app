@@ -25,7 +25,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setClearUserAuth, setIsAuthenticated } from "../store/auth/AuthSlice";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 165;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

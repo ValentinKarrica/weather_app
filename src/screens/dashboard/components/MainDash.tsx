@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import BasicModal from "./BasicModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/config/rootReducer";
+import { wrap } from "module";
 
 const MainContainer = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const MainContainer = styled.div`
 `;
 const FirstNav = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 1rem;
@@ -35,6 +37,7 @@ const FirstNav = styled.div`
 `;
 const SecondNav = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 1rem;
@@ -84,11 +87,11 @@ const MainDash = () => {
           component="form"
           onSubmit={onSearchHandler}
           noValidate
-          sx={{ display: "flex", flex: 1.5 }}
+          sx={{ display: "flex", flex: 1.5, flexWrap: "wrap" }}
         >
           <TextField
             value={searchLocation}
-            sx={{ flex: 1 }}
+            sx={{ flex: 1, minWidth: "120px" }}
             label={
               <Div>
                 <SearchSharpIcon /> Type Location
@@ -113,7 +116,7 @@ const MainDash = () => {
           exclusive
           onChange={selectHandler}
           aria-label="text alignment"
-          sx={{ flex: 1 }}
+          sx={{ flex: 1, flexWrap: "wrap" }}
         >
           <ToggleButton color="primary" sx={{ flex: 1 }} value="Today">
             Today
